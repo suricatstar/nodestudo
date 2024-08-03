@@ -1,25 +1,23 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const auth = (req, res, next) => {
-    
-    const token = req.headers.authorization
+  const token = req.headers.authorization;
 
-    if (!token) {
-        return res.status(401).json({ message: 'Acesso Negado' })
-    }
+  if (!token) {
+    return res.status(401).json({ message: "Acesso Negado" });
+  }
 
-    try {
-        const decoded = jwt.verify(token.replace('Bearer ', ''), JWT_SECRET)
-        
-        req.userId = decoded.id
+  try {
+    const decoded = jwt.verify(token.replace("Bearer ", ""), JWT_SECRET);
 
-    } catch (error) {
-        return res.status(401).json({ message: 'Token Inválido'})
-    }
+    req.userId = decoded.id;
+  } catch (error) {
+    return res.status(401).json({ message: "Token Inválido" });
+  }
 
-    next()
-}
+  next();
+};
 
-export default auth
+export default auth;
